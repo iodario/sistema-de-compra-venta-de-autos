@@ -1,4 +1,6 @@
 
+let arreglo_auto = [];     //array vacio
+let gen_id = 1;      //variable generadora de id, que se ira incrementando
 alert("Bienvenidos al sistema de compra y venta de autos!");
 let flag = true;
 
@@ -38,8 +40,6 @@ while (flag) {
     }
 }
 
-let arreglo_auto = [];     //array vacio
-let gen_id = 1;      //variable generadora de id, que se ira incrementando
 
 //solicito datos al usuario y lo guardo en el array vacio, con push.
 function ingresar_nuevo_auto() {
@@ -106,7 +106,8 @@ function eliminar_auto() {
             }
         }
         else {
-            alert("id no valido");
+            //si no existe el id ingresado avisa al usuario
+            alert("el id ingresado no existe");
         }
     }
 }
@@ -123,10 +124,7 @@ function existen_autos() {
 
 
 function mostrar_autos() {
-
-    if (existen_autos()) {
-        
-
+    if (existen_autos()) {      
         mostrar_arreglo();
     }
 }
@@ -134,7 +132,6 @@ function mostrar_autos() {
 
 function mostrar_arreglo() {
     let mensaje = "Los autos en stock son";
-
     arreglo_auto.forEach((auto) => {
         mensaje += "\n" + auto.mostrar_descripcion();
     })
