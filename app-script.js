@@ -86,18 +86,17 @@ function solicitar_datos_auto() {
 function eliminar_auto() {
     //primero hay que ver si hay autos para eliminar
     if (existen_autos()) {
-
         let id_ingresado = prompt("Ingrese el id del auto a eliminar");
 
         //nos aseguramos que el id ingresado a eliminar existe dentro del array 
         if (arreglo_auto.some((a) => a.id == id_ingresado)) {
-            
+
             //utilizamos find() para identificar el elemento que el usuario ingreso 
             let auto_encontrado = arreglo_auto.find((a) => a.id == id_ingresado);
 
             if (auto_encontrado) {
 
-                let resp = confirm("Está seguro que desea eliminar el auto: " + auto_encontrado.mostrar_descripcion() + " ?");                
+                let resp = confirm("Está seguro que desea eliminar el auto: " + auto_encontrado.mostrar_descripcion() + " ?");
                 if (resp) {
                     //generamos un nuevo arreglo con todos los elementos cuyo id sea != del ingresado
                     arreglo_auto = arreglo_auto.filter((a) => a.id != id_ingresado);
@@ -124,7 +123,31 @@ function existen_autos() {
 
 
 function mostrar_autos() {
-    if (existen_autos()) {      
+    if (existen_autos()) {
+        let resp = prompt("Si desea mostrar precios en forma ascendente presione 'A', si desea descendente presione 'D'.").toUpperCase();
+
+        if (resp == "A") {
+            arreglo_auto.sort((a, b) => {
+                if (a.precio > b.precio) {
+                    return 1;
+                }
+                if (a.precio < b.precio) {
+                    return -1;
+                }
+                return 0;
+            })
+        }
+        if (resp == "D") {
+            arreglo_auto.sort((a, b) => {
+                if (a.precio > b.precio) {
+                    return -1;
+                }
+                if (a.precio < b.precio) {
+                    return 1;
+                }
+                return 0;
+            })
+        }
         mostrar_arreglo();
     }
 }
@@ -139,4 +162,16 @@ function mostrar_arreglo() {
     alert(mensaje);
 }
 
+
+//hacemos nuestra propia funcion buscar
+function buscar_auto(id_a_buscar){
+    let count = 0;
+    while (count < arreglo_auto.length){
+        if (arreglo_auto[count].id == id_a_buscar){
+            return arreglo_auto[count];
+        }
+        count++;
+    }
+
+}
 
