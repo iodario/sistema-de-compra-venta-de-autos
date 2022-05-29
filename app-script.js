@@ -12,8 +12,10 @@ while (flag) {
     mensaje += "\n3) Mostrar autos en stock";
     mensaje += "\n4) Aplicar un descuento";
     mensaje += "\n5) Salir";
-    let resp = prompt(mensaje);
-
+    mensaje += "\n6) Mostrar autos con precios pares";
+    let resp =  prompt(mensaje);
+    
+    
     switch (resp) {
         case "1":
             ingresar_nuevo_auto();
@@ -30,6 +32,9 @@ while (flag) {
         case "5":
             alert("Gracias por utilizar nuestra pagina :) ");
             flag = false;
+            break;
+        case "6":
+            mostrar_autos_precio_par();
             break;
         case null:
             alert("Gracias por utilizar nuestra pagina :) ");
@@ -100,6 +105,7 @@ function eliminar_auto() {
                 if (resp) {
                     //generamos un nuevo arreglo con todos los elementos cuyo id sea != del ingresado
                     arreglo_auto = arreglo_auto.filter((a) => a.id != id_ingresado);
+
                     alert("Auto fue eliminado con exito");
                 }
             }
@@ -127,6 +133,7 @@ function mostrar_autos() {
         let resp = prompt("Si desea mostrar precios en forma ascendente presione 'A', si desea descendente presione 'D'.").toUpperCase();
 
         if (resp == "A") {
+
             arreglo_auto.sort((a, b) => {
                 if (a.precio > b.precio) {
                     return 1;
@@ -138,6 +145,7 @@ function mostrar_autos() {
             })
         }
         if (resp == "D") {
+
             arreglo_auto.sort((a, b) => {
                 if (a.precio > b.precio) {
                     return -1;
@@ -164,10 +172,10 @@ function mostrar_arreglo() {
 
 
 //hacemos nuestra propia funcion buscar
-function buscar_auto(id_a_buscar){
+function buscar_auto(id_a_buscar) {
     let count = 0;
-    while (count < arreglo_auto.length){
-        if (arreglo_auto[count].id == id_a_buscar){
+    while (count < arreglo_auto.length) {
+        if (arreglo_auto[count].id == id_a_buscar) {
             return arreglo_auto[count];
         }
         count++;
@@ -175,3 +183,78 @@ function buscar_auto(id_a_buscar){
 
 }
 
+
+function aplicar_descuento() {
+    if (existen_autos()) {
+        let descuento = +prompt("Ingrese el descuento a aplicar");
+
+        if (!isNaN(descuento)) {
+
+            let desc = descuento / 100;
+
+            const arreglo_auto_descuentos = arreglo_auto.map((auto) => {
+                return {
+                    marca: auto.marca,
+                    modelo: auto.modelo,
+                    precio: auto.precio * (1 - desc)
+                }
+            })
+            alert("A los autos se les aplicara un descuento del " + descuento + "%. ")
+            let mensaje = "Los autos con los descuentos aplicados son : \n"
+            arreglo_auto_descuentos.forEach((auto) => {
+                mensaje += "Marca: " + auto.marca + " - " + "Modelo: " + auto.modelo + " - " + "Precio con descuento: " + auto.precio + "\n"
+            })
+
+            alert(mensaje);
+            return
+        }
+    }
+}
+
+//clasificamos por precio par
+
+function mostrar_autos_precio_par(){
+    if(existen_autos()){
+        let precioPares = precioPar(arreglo_auto)
+        let mensaje = "Los autos con precios pares son: \n"
+        precioPares.forEach((auto) => {
+            mensaje += "Marca: " +auto.marca+" - "+"Modelo: "+auto.modelo+" - "+"Precio: "+auto.precio+ "\n"
+        })
+        alert(mensaje)
+    }
+}
+
+function precioPar(array){
+    let precioPar = []
+    array.forEach((auto) => {
+        if(auto.precio % 2 == 0){
+            precioPar.push(auto)
+        }
+    })
+    return precioPar
+}
+
+
+
+
+
+//**reemplazo del switch */
+
+// const menu_opciones = 
+// {
+//     '1' : ()=> ingresar_nuevo_auto(),
+//     '2' : ()=> eliminar_auto(),
+//     '3' : ()=> mostrar_autos(),
+//     '4' : ()=> aplicar_descuento(),
+//     '5' : ()=> {
+//         alert("Gracias por utilizar nuestra pagina :) ");
+//         flag = false;
+//     },
+//     '6' : ()=> mostrar_autos_precio_par(),
+//     null: ()=> {
+//         alert("Gracias por utilizar nuestra pagina :)");
+//         flag = false;  
+//     } 
+// }3
+
+// const op_default = ()=> alert("No ingresaste una opcion valida");
